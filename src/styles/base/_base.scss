@@ -1,0 +1,23 @@
+html {
+  /* We know that by DEFAULT 1rem = 16px(16px is the DEFAULT value the the BROWSER give for 1 rem) and this 62.5%
+  is coming from 10px/16px = 0.625 => 62.5% . So NOW pretty much we're working with 'rem' in a 10px BASE SYSTEM 
+  an not on a 16px BASE that is what get assigned by DEFAULT from the Browser */
+  font-size: 62.5%;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: $m-size;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+.is-active {
+  font-weight: bold;
+}

@@ -1,0 +1,29 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "semi": 2,
+    "no-console": "off",
+    "no-unused-vars": "off",
+    "no-redeclare": "off",
+    "no-case-declarations": "off",
+    "no-undef": "off"
+  },
+
+  "globals": {
+    "ReactDOM": true,
+    "React": true
+  }
+}
