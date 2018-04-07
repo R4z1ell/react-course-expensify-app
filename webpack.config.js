@@ -13,7 +13,7 @@ module.exports = env => {
   return {
     entry: "./src/app.js",
     output: {
-      path: path.join(__dirname, "public"),
+      path: path.join(__dirname, "public", "dist"),
       filename: "bundle.js"
     },
     module: {
@@ -55,7 +55,8 @@ module.exports = env => {
       be handling ROUTING via OUR Client side code(and NOT via Server side ANYMORE) and that it SHOULD send 
       BACK to us the ROOT Route which contains the 'index.html' AND the 'bundle.js' files so that we can have 
       the Client taking OVER the ROUTING */
-      historyApiFallback: true
+      historyApiFallback: true,
+      publicPath: "/dist/"
     }
   };
 };
