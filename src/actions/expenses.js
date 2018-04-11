@@ -67,3 +67,35 @@ export const editExpense = (id, updates) => ({
   id,
   updates
 });
+
+// SET_EXPENSES
+export const setExpenses = expenses => ({
+  type: "SET_EXPENSES",
+  expenses
+});
+
+/* This 'startSetExpenses' below is our ASYNCHRONOUS ACTION that fetches our Data from the Database and put
+ALL this Data inside our Redux 'store'(this last part, so the actual DISPATCH to the Redux 'store' happens 
+inside the 'app.js' file) */
+export const startSetExpenses = () => {
+  return dispatch => {
+    /* By adding this 'return' below we're making sure that the PROMISE actually gets RETURNED and THIS is 
+    what is going to allow us to have access to the 'then' method we're chaining on this 'startSetExpenses'
+    INSIDE the 'app.js' File where we actually DISPATCH */
+    return database
+      .ref("expenses")
+      .once("value")
+      .then(snapshot => {
+        const expenses = [];
+
+        snapshot.forEach(childSnapshot => {
+          expenses.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val()
+          });
+        });
+
+        dispatch(setExpenses(expenses));
+      });
+  };
+};

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import AppRouter from "./routers/AppRouter";
 import configureStore from "./store/configureStore";
-import { addExpense } from "./actions/expenses";
+import { startSetExpenses } from "./actions/expenses";
 import { setTextFilter } from "./actions/filters";
 import getVisibleExpenses from "./selectors/expenses";
 import "normalize.css/normalize.css";
@@ -24,4 +24,12 @@ const jsx = (
   </Provider>
 );
 
-ReactDOM.render(jsx, document.getElementById("app"));
+ReactDOM.render(<p>Loading...</p>, document.getElementById("app"));
+
+// 'startSetExpenses' is going to return a PROMISE and this is why we can ATTACH onto it the 'then' method
+store.dispatch(startSetExpenses()).then(() => {
+  /* When our ASYNCHRONOUS 'startSetExpenses' ACTION it's DONE, so ONLY when this Action complete SUCCESSFULLY,
+  we're going to actually RENDER our Application with the code below, UNTIL then we're going to SHOW the 
+  message we just created above(so the '<p>Loading...</p>') */
+  ReactDOM.render(jsx, document.getElementById("app"));
+});

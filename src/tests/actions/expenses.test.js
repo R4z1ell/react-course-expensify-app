@@ -4,12 +4,36 @@ import {
   startAddExpense,
   addExpense,
   editExpense,
-  removeExpense
+  removeExpense,
+  setExpenses,
+  startSetExpenses
 } from "../../actions/expenses";
 import expenses from "../fixtures/expenses";
 import database from "../../firebase/firebase";
 
 const createMockStore = configureMockStore([thunk]);
+
+beforeEach(done => {
+  const expensesData = {};
+  expenses.forEach(({ id, description, note, amount, createdAt }) => {
+    /* Here below we're ITERETING over the 'expenses' Array(the DUMMY Test Data Array we're importing above) 
+    and for EACH Item inside this 'expenses' Array we're storing ALL their DATA(precisely the FOUR properties
+    'description', 'note', 'amount' and 'createdAt') INSIDE the 'expensesData[id]'(that it's pretty much the
+    VALUE of the 'id' property for EACH item inside the 'expenses' Array). So in the END we'll have an
+    'expensesData' variable(that INITIALLY we set to an EMPTY Object) that will STORE three Items(because three 
+    are the ORIGINAL items inside the 'expenses' Array) and THOSE Item will be stored INSIDE each ID. So we'll
+    have something like this pretty much    
+    { 1: {amount: 195, createdAt: 0, description "Gum", note: ""}, 2: {...}, 3: {....}} */
+    expensesData[id] = { description, note, amount, createdAt };
+  });
+  database
+    .ref("expenses")
+    .set(expensesData)
+    /* By passing the 'done' argument above and CALLING the 'done()' function HERE below we're making sure that
+    the 'beforeEach' above DOESN'T allow the TEST cases(so ALL our TESTS we have in THIS file) to RUN until 
+    "Firebase" have actually STORED our Data INSIDE the Database */
+    .then(() => done());
+});
 
 test("should setup remove expense action object", () => {
   const action = removeExpense({ id: "123abc" });
@@ -113,16 +137,35 @@ test("should add expense with defaults to database and store", done => {
     });
 });
 
-// test("should setup add expense action object with default values", () => {
-//   const action = addExpense();
-//   expect(action).toEqual({
-//     type: "ADD_EXPENSE",
-//     expense: {
-//       id: expect.any(String),
-//       description: "",
-//       note: "",
-//       amount: 0,
-//       createdAt: 0
-//     }
-//   });
-// });
+test("should setup set expense action object with data", () => {
+  // This 'expenses' below refers to our DUMMY Test Data Array we're importing ABOVE
+  const action = setExpenses(expenses);
+  expect(action).toEqual({
+    type: "SET_EXPENSES",
+    // This 'expenses' below is AGAIN the Dummy Test Data Array, we're using as usual the ES6 Object Syntax
+    expenses
+  });
+});
+
+/* Since we're creating an ASYNCHRONOUS TEST we NEED to provide 'done' as the FIRST Argument below. By doing
+this we're letting 'jest'(our testing Library) KNOW to NOT consider this test a SUCCESS or a FAILURE until 
+'done()' is CALLED */
+test("should fetch the expenses from firebase", done => {
+  /* In order to take ADVANTAGE of our ASYNCHRONOUS Functionality we're going to need to CREATE our MOCK 'store'
+  (so our FAKE 'store' only for TESTING purpose) */
+  const store = createMockStore({});
+  /* We DON'T need to pass ANY Data INSIDE the 'startSetExpenses' Function because it TAKES none(we defined 
+  this Function to NOT take ANY argument) */
+  store.dispatch(startSetExpenses()).then(() => {
+    /* With this code below we're grabbing ALL the Actions INSIDE our FAKE 'store' we just created above, in
+    THIS case though we ONLY expect to have just ONE Action there(so the 'SET_EXPENSES' Action pretty much) */
+    const actions = store.getActions();
+    // Here below we're SELECTING the FIRST Item we have INSIDE the 'actions' variable we created here above
+    expect(actions[0]).toEqual({
+      type: "SET_EXPENSES",
+      // This 'expenses' refers to the DUMMY Test Data Array we're importing at the top of this file
+      expenses
+    });
+    done();
+  });
+});
