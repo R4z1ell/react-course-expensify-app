@@ -1,9 +1,18 @@
 const path = require("path");
+const webpack = require("webpack");
 /* This 'extract-text-webpack-plugin' is a third-party Webpack PLUGIN that will help us to EXTRACT ALL THE 'css'
 or 'sass' files FROM our 'bundle.js' file and put them INSIDE their OWN file(that we named 'styles.css'). In
 this way we'll be able to PASS the 'styles.css' file INSIDE our 'index.html'(through a 'link' tag as usual) file 
 and LOAD them BEFORE we run our JavaScript */
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
+
+if (process.env.NODE_ENV === "test") {
+  require("dotenv").config({ path: ".env.test" });
+} else if (process.env.NODE_ENV === "development") {
+  require("dotenv").config({ path: ".env.development" });
+}
 
 module.exports = env => {
   // IF 'env' is equal to the string 'production' THEN this 'isProduction' variable will have a value of TRUE
@@ -44,7 +53,29 @@ module.exports = env => {
         }
       ]
     },
-    plugins: [CSSExtract],
+    plugins: [
+      CSSExtract,
+      new webpack.DefinePlugin({
+        "process.env.FIREBASE_API_KEY": JSON.stringify(
+          process.env.FIREBASE_API_KEY
+        ),
+        "process.env.FIREBASE_AUTH_DOMAIN": JSON.stringify(
+          process.env.FIREBASE_AUTH_DOMAIN
+        ),
+        "process.env.FIREBASE_DATABASE_URL": JSON.stringify(
+          process.env.FIREBASE_DATABASE_URL
+        ),
+        "process.env.FIREBASE_PROJECT_ID": JSON.stringify(
+          process.env.FIREBASE_PROJECT_ID
+        ),
+        "process.env.FIREBASE_STORAGE_BUCKET": JSON.stringify(
+          process.env.FIREBASE_STORAGE_BUCKET
+        ),
+        "process.env.FIREBASE_MESSAGING_SENDER_ID": JSON.stringify(
+          process.env.FIREBASE_MESSAGING_SENDER_ID
+        )
+      })
+    ],
     /* When the 'isProduction' variable is TRUE we'll use the 'source-map' that is a source IDEAL for PRODUCTION
     and that give us a 'bundle.js' file that has a very SMALL size, instead if 'isProduction' is false we'll use 
     the OTHER source so the "inline-source-map" for DEVELOPMENT */
