@@ -12,5 +12,11 @@ const config = {
 firebase.initializeApp(config);
 
 const database = firebase.database();
+/* This code below allows us to set up Firebase to authenticate with Google, we also had to ENABLE the 'Google'
+Provider directly INSIDE the 'Firebase' webpage inside the 'Authentication' Section. But this alone wasn't
+ENOUGH, what we really NEEDED to do was actually pass the PROVIDED(so this 'googleAuthProvider' below) INSIDE
+the 'signInWithPopup' Function we're using in the 'firebase.js' file and THAT Function is what TRIGGERED the
+POPUP page that showed up where we could log in using a Google Account */
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export { firebase, database as default };
+export { firebase, googleAuthProvider, database as default };

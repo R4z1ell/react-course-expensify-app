@@ -1,7 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { startLogout } from "../actions/auth";
 
-const Header = () => (
+/* Here below we're taking the 'props' argument(which is the FIRST one) and DESTRUCTURE it for 'startLogout',
+in this way we DIRECTLY pass it INSIDE the 'onClick' handler we're using for the 'button' element below */
+export const Header = ({ startLogout }) => (
   <header>
     <h1>Expensify</h1>
     {/* The 'NavLink' is just another Component(of 'react-router-dom') that is SIMILAR to the 'Link' Component,
@@ -18,7 +22,12 @@ const Header = () => (
     <NavLink to="/create" activeClassName="is-active">
       Create Expense
     </NavLink>
+    <button onClick={startLogout}>Logout</button>
   </header>
 );
 
-export default Header;
+const mapDispatchToProps = dispatch => ({
+  startLogout: () => dispatch(startLogout())
+});
+
+export default connect(undefined, mapDispatchToProps)(Header);

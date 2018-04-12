@@ -17,10 +17,10 @@ in the feature we're going to test way more COMPLEX things and all these things 
 library and this is WHY we're going to use ENZYME that like 'react-test-renderer' is a ALSO a renderer library 
 for React BUT it has a LOT more features that will help us with COMPLEXT testing */
 // import ReactShallowRenderer from "react-test-renderer/shallow"; // Now we're using Enzyme so we can remove it
-import Header from "../../components/Header";
+import { Header } from "../../components/Header";
 
 test("should render Header correctly", () => {
-  const wrapper = shallow(<Header />);
+  const wrapper = shallow(<Header startLogout={() => {}} />);
   expect(wrapper).toMatchSnapshot();
   //   const renderer = new ReactShallowRenderer();
   //   /* This 'renderer.render()' below that is pretty much the following code 'ReactShallowRenderer.render()' is
@@ -43,4 +43,11 @@ test("should render Header correctly", () => {
   //   this new change by using 'yarn test -u' in the terminal OR we can go on the Component page itself, track the
   //   error and RESTORE it's state the PREVIOUS one */
   //   expect(renderer.getRenderOutput()).toMatchSnapshot();
+});
+
+test("should call startLogout on button click", () => {
+  const startLogout = jest.fn();
+  const wrapper = shallow(<Header startLogout={startLogout} />);
+  wrapper.find("button").simulate("click");
+  expect(startLogout).toHaveBeenCalled();
 });

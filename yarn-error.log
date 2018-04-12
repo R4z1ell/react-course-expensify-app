@@ -23,7 +23,7 @@ npm manifest:
       "build:dev": "webpack",
       "build:prod": "webpack -p --env production",
       "dev-server": "webpack-dev-server",
-      "test": "jest --config=jest.config.json",
+      "test": "cross-env NODE_ENV=test jest --config=jest.config.json",
       "start": "node server/server.js",
       "heroku-postbuild": "yarn run build:prod"
     },
@@ -41,6 +41,7 @@ npm manifest:
       "express": "^4.16.3",
       "extract-text-webpack-plugin": "3.0.0",
       "firebase": "^4.12.1",
+      "history": "^4.7.2",
       "live-server": "^1.2.0",
       "moment": "^2.22.0",
       "node-sass": "^4.8.3",
@@ -55,6 +56,7 @@ npm manifest:
       "react-redux": "^5.0.7",
       "react-router-dom": "^4.2.2",
       "redux": "^3.7.2",
+      "redux-mock-store": "^1.5.1",
       "redux-thunk": "^2.2.0",
       "sass-loader": "^6.0.7",
       "style-loader": "^0.20.3",
@@ -63,6 +65,8 @@ npm manifest:
       "webpack": "3.1.0"
     },
     "devDependencies": {
+      "cross-env": "^5.1.4",
+      "dotenv": "^5.0.1",
       "enzyme": "3.0.0",
       "enzyme-to-json": "^3.3.3",
       "eslint": "^4.19.1",
@@ -1957,6 +1961,13 @@ Lockfile:
       safe-buffer "^5.0.1"
       sha.js "^2.4.8"
   
+  cross-env@^5.1.4:
+    version "5.1.4"
+    resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.1.4.tgz#f61c14291f7cc653bb86457002ea80a04699d022"
+    dependencies:
+      cross-spawn "^5.1.0"
+      is-windows "^1.0.0"
+  
   cross-spawn@^3.0.0:
     version "3.0.1"
     resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-3.0.1.tgz#1256037ecb9f0c5f79e3d6ef135e30770184b982"
@@ -2343,6 +2354,10 @@ Lockfile:
     dependencies:
       dom-serializer "0"
       domelementtype "1"
+  
+  dotenv@^5.0.1:
+    version "5.0.1"
+    resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
   
   duplexer@~0.1.1:
     version "0.1.1"
@@ -3892,7 +3907,7 @@ Lockfile:
     version "0.2.1"
     resolved "https://registry.yarnpkg.com/is-utf8/-/is-utf8-0.2.1.tgz#4b0da1442104d1b336340e80797e865cf39f7d72"
   
-  is-windows@^1.0.2:
+  is-windows@^1.0.0, is-windows@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/is-windows/-/is-windows-1.0.2.tgz#d1850eb9791ecd18e6182ce12a30f396634bb19d"
   
@@ -4444,6 +4459,10 @@ Lockfile:
   lodash.flattendeep@^4.4.0:
     version "4.4.0"
     resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
+  
+  lodash.isplainobject@^4.0.6:
+    version "4.0.6"
+    resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
   
   lodash.memoize@^4.1.2:
     version "4.1.2"
@@ -5944,6 +5963,12 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
     dependencies:
       balanced-match "^0.4.2"
+  
+  redux-mock-store@^1.5.1:
+    version "1.5.1"
+    resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.5.1.tgz#fca4335392e66605420b5559fe02fc5b8bb6d63c"
+    dependencies:
+      lodash.isplainobject "^4.0.6"
   
   redux-thunk@^2.2.0:
     version "2.2.0"
