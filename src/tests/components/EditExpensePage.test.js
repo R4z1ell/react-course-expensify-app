@@ -3,17 +3,19 @@ import { shallow } from "enzyme";
 import { EditExpensePage } from "../../components/EditExpensePage";
 import expenses from "../fixtures/expenses";
 
-let editExpense, startRemoveExpense, history, wrapper;
+let startEditExpense, startRemoveExpense, history, wrapper;
 
 beforeEach(() => {
-  editExpense = jest.fn();
+  startEditExpense = jest.fn();
   startRemoveExpense = jest.fn();
   history = { push: jest.fn() };
   // this 'shallow' function is just used to VIRTUALLY RENDER our Component
   wrapper = shallow(
     <EditExpensePage
-      editExpense={editExpense} // this 'editExpense' refers to the SPY we just STORED inside the 'editExpense'
-      startRemoveExpense={startRemoveExpense} // this 'removeExpense' refers to the SPY we just STORED inside the 'removeExpense'
+      // this 'startEditExpense' refers to the SPY we just STORED inside the 'startEditExpense'
+      startEditExpense={startEditExpense}
+      // this 'startRemoveExpense' refers to the SPY we just STORED inside the 'startRemoveExpense'
+      startRemoveExpense={startRemoveExpense}
       history={history} // this 'history' refers to the SPY we STORED inside the 'push' property above
       /* We ALSO need to pass down an ACTUAL 'expense'(so a REAL data pretty much, this is why we IMPORTED our
       DUMMY Test Data 'expenses' above,so just to be able to USE them here) and THAT need to happen via the
@@ -32,10 +34,13 @@ test("should render EditExpensePage correctly", () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test("should handle editExpense", () => {
+test("should handle startEditExpense", () => {
   wrapper.find("ExpenseForm").prop("onSubmit")(expenses[2]);
   expect(history.push).toHaveBeenLastCalledWith("/");
-  expect(editExpense).toHaveBeenLastCalledWith(expenses[2].id, expenses[2]);
+  expect(startEditExpense).toHaveBeenLastCalledWith(
+    expenses[2].id,
+    expenses[2]
+  );
 });
 
 test("should handle startRemoveExpense", () => {
