@@ -12,13 +12,13 @@ import createHistory from "history/createBrowserHistory";
 import AddExpensePage from "../components/AddExpensePage";
 import EditExpensePage from "../components/EditExpensePage";
 import ExpenseDashboardPage from "../components/ExpenseDashboardPage";
-import HelpPage from "../components/HelpPage";
 import NotFoundPage from "../components/NotFoundPage";
 /* Here below we're refering to the CONNECTED version of the 'LoginPage' Component that is exported as DEFAULT
 so we're not importing anymore the NAMED version of this Component so we DON'T need the curly braces we were
 using before, now we can simply import it like this */
 import LoginPage from "../components/LoginPage";
 import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 export const history = createHistory();
 
@@ -55,11 +55,10 @@ const AppRouter = () => (
       Screen and NOT both Components(so also the 'ExpenseDashboardPage' Component) like we were having BEFORE
       applying this 'exact={true}' PROPERTY because NOW that Component will ONLY show if we're actually visiting
       EXACTLY that SPECIFIC Route */}
-        <Route path="/" component={LoginPage} exact={true} />
+        <PublicRoute path="/" component={LoginPage} exact={true} />
         <PrivateRoute path="/dashboard" component={ExpenseDashboardPage} />
         <PrivateRoute path="/create" component={AddExpensePage} />
         <PrivateRoute path="/edit/:id" component={EditExpensePage} />
-        <Route path="/help" component={HelpPage} />
         {/* Remember that the 'path' property is completely OPTIONAL, in this case we DON'T have one for example.
       NOW every time we visit a URL that is NOT available inside our ROUTES we'll see this 404 PAGE instead */}
         <Route component={NotFoundPage} />

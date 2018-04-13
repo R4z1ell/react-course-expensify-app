@@ -16,7 +16,7 @@ export const Header = ({ startLogout }) => (
     actually on THAT page, so in this case when we're on the ROOT Page we'll the styling that we've specified(in 
     our case we've just made the link BOLD) BUT when we're on ANOTHER page that is NOT the ROOT page we will NOT
     see the BOLD style applied on this 'Dashboard' TEXT */}
-    <NavLink to="/" activeClassName="is-active" exact={true}>
+    <NavLink to="/dashboard" activeClassName="is-active">
       Dashboard
     </NavLink>
     <NavLink to="/create" activeClassName="is-active">

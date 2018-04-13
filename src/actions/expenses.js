@@ -17,7 +17,8 @@ THAT Data to CORRECTLY sync and THEN we'll DISPATCH 'addExpense' making sure tha
 reflects those CHANGES as well. We know that if we want to SAVE something inside Firebase we NEED to RESTRUCTURE
 our Data(because by DEFAULT Firebase DOESN'T accepts ARRAY) */
 export const startAddExpense = (expenseData = {}) => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
     /* Here below we're using DECONSTRUCTURING to define the DEFAULT values for EACH of the properties(in case 
     the User doesn't add them for whatever reason) */
     const {
@@ -33,7 +34,7 @@ export const startAddExpense = (expenseData = {}) => {
 
     return (
       database
-        .ref("expenses")
+        .ref(`users/${uid}/expenses`)
         // This 'expense' we're pushing refers to 'expense' variable we just created here above
         .push(expense)
         /* The 'push' method return a 'firebase.database.ThenableReference' which is DEFINED as a COMBINED Promise
@@ -62,9 +63,10 @@ export const removeExpense = ({ id } = {}) => ({
 });
 
 export const startRemoveExpense = ({ id } = {}) => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
     return database
-      .ref(`expenses/${id}`)
+      .ref(`users/${uid}/expenses/${id}`)
       .remove()
       .then(() => {
         /* When the 'expense' it's been successfully REMOVED, we can then actually DISPATCH this 'removeExpense'
@@ -82,9 +84,10 @@ export const editExpense = (id, updates) => ({
 });
 
 export const startEditExpense = (id, updates = {}) => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
     return database
-      .ref(`expenses/${id}`)
+      .ref(`users/${uid}/expenses/${id}`)
       .update(updates)
       .then(() => {
         dispatch(editExpense(id, updates));
@@ -102,12 +105,16 @@ export const setExpenses = expenses => ({
 ALL this Data inside our Redux 'store'(this last part, so the actual DISPATCH to the Redux 'store' happens 
 inside the 'app.js' file) */
 export const startSetExpenses = () => {
-  return dispatch => {
+  /* When we use these ASYNCHRONOUS ACTION, so exactly like THIS 'startSetExpenses' Action, they gets called
+  with 'dispatch' BUT they ALSO gets called with the 'getState' PROPERTY and we can USE this property to ACCESS
+  the CURRENT 'state' of our Application and take the 'uid' exactly like we're doing below */
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
     /* By adding this 'return' below we're making sure that the PROMISE actually gets RETURNED and THIS is 
     what is going to allow us to have access to the 'then' method we're chaining on this 'startSetExpenses'
     INSIDE the 'app.js' File where we actually DISPATCH */
     return database
-      .ref("expenses")
+      .ref(`users/${uid}/expenses`)
       .once("value")
       .then(snapshot => {
         const expenses = [];
