@@ -20,7 +20,9 @@ module.exports = env => {
   const CSSExtract = new ExtractTextPlugin("styles.css");
 
   return {
-    entry: "./src/app.js",
+    /* 'babel-polyfill' is a library that will give to our Application SUPPORT for a WIDER range of Browsers,
+    like for example Internet Explorer and so on, so Browsers that DOESN'T support es6/es7 Features */
+    entry: ["babel-polyfill", "./src/app.js"],
     output: {
       path: path.join(__dirname, "public", "dist"),
       filename: "bundle.js"

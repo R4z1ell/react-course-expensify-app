@@ -1,0 +1,15 @@
+.form {
+  display: flex;
+  flex-direction: column;
+
+  /* Here we're selecting ALL the DIRECT Children we have INSIDE our 'form' class(that refers to our actual
+  FORM element inside the 'ExpenseForm.js' Component */
+  > * {
+    margin-bottom: $m-size;
+  }
+}
+
+.form__error {
+  margin: 0 0 $m-size 0;
+  font-style: italic;
+}

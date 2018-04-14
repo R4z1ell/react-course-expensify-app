@@ -33,32 +33,47 @@ export class ExpenseListFilters extends React.Component {
 
   render() {
     return (
-      <div>
-        <input
-          type="text"
-          value={this.props.filters.text}
-          onChange={this.onTextChange}
-        />
-        <select value={this.props.filters.sortBy} onChange={this.onSortChange}>
-          <option value="date">Date</option>
-          <option value="amount">Amount</option>
-        </select>
-        {/* This 'DateRagePicker' is coming from the 'react-dates' library and by DEFAULT to USE it we HAVE to
-        define these 5 PROPERTIES we've added below(so if we DON'T define EVEN one of these properties the
-        Component will NOT work) */}
-        <DateRangePicker
-          startDate={this.props.filters.startDate}
-          endDate={this.props.filters.endDate}
-          onDatesChange={this.onDatesChange}
-          focusedInput={this.state.calendarFocused}
-          onFocusChange={this.onFocusChange}
-          /* This code will add a little button to CLEAR the dates,for us is useful because by clicking it we'll 
-          be able to immediately show ALL our 'expense' an NOT just the one we're filtering with the Calendar */
-          showClearDates={true}
-          numberOfMonths={1}
-          // This code will allow us to SELECT from the 'react-dates' CALENDAR any date in the PAST
-          isOutsideRange={() => false}
-        />
+      <div className="content-container">
+        <div className="input-group">
+          <div className="input-group__item">
+            <input
+              type="text"
+              className="text-input"
+              placeholder="Search expenses"
+              value={this.props.filters.text}
+              onChange={this.onTextChange}
+            />
+          </div>
+          <div className="input-group__item">
+            <select
+              className="select"
+              value={this.props.filters.sortBy}
+              onChange={this.onSortChange}
+            >
+              <option value="date">Date</option>
+              <option value="amount">Amount</option>
+            </select>
+          </div>
+          <div className="input-group__item">
+            {/* This 'DateRagePicker' is coming from the 'react-dates' library and by DEFAULT to USE it we HAVE 
+            to define these 5 PROPERTIES we've added below(so if we DON'T define EVEN one of these properties 
+            the Component will NOT work) */}
+            <DateRangePicker
+              startDate={this.props.filters.startDate}
+              endDate={this.props.filters.endDate}
+              onDatesChange={this.onDatesChange}
+              focusedInput={this.state.calendarFocused}
+              onFocusChange={this.onFocusChange}
+              /* This code will add a little button to CLEAR the dates,for us is useful because by clicking it 
+              we'll be able to immediately show ALL our 'expense' an NOT just the one we're filtering with the 
+              Calendar */
+              showClearDates={true}
+              numberOfMonths={1}
+              // This code will allow us to SELECT from the 'react-dates' CALENDAR any date in the PAST
+              isOutsideRange={() => false}
+            />
+          </div>
+        </div>
       </div>
     );
   }

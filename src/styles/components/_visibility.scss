@@ -1,0 +1,13 @@
+.show-for-mobile {
+  @media (min-width: $desktop-breakpoint) {
+    display: none;
+  }
+}
+
+.show-for-desktop {
+  /* We've added this '- 0.01rem' to make sure that we NEVER have BOTH these two Media Query taking effect at
+  the exact SAME time */
+  @media (max-width: $desktop-breakpoint - 0.01rem) {
+    display: none;
+  }
+}

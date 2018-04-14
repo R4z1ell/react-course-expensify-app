@@ -1,0 +1,68 @@
+.list-header {
+  background: $off-white;
+  border: 1px solid darken($off-white, 7%);
+  color: $grey;
+  display: flex;
+  justify-content: space-between;
+  padding: $s-size $m-size;
+}
+
+.list-body {
+  margin-bottom: $m-size;
+
+  @media (min-width: $desktop-breakpoint) {
+    margin-bottom: $l-size;
+  }
+}
+
+.list-item {
+  border: 1px solid darken($off-white, 7%);
+  border-top: none; // To NOT have an EXTRA border above EACH Item
+  color: $dark-grey;
+  display: flex;
+  flex-direction: column;
+  padding: $s-size;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  // This '&:hover' below is just a SHORTHAND for the following code '.list-item:hover'
+  &:hover {
+    background: $off-white;
+  }
+  @media (min-width: $desktop-breakpoint) {
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: $m-size;
+  }
+}
+
+.list-item--message {
+  align-items: center;
+  color: $grey;
+  justify-content: center;
+  padding: $m-size;
+  &:hover {
+    background: none;
+  }
+}
+
+.list-item__title {
+  margin: 0;
+  /* With this 'word-break' property set to 'break-all' we're going to BREAK UP those super long words into 
+  MULTIPLE lines, so that we don't end up with a broken layout */
+  word-break: break-all;
+}
+
+.list-item__sub-title {
+  color: $grey;
+  font-size: $font-size-small;
+}
+
+.list-item__data {
+  margin: $s-size 0 0 0;
+
+  @media (min-width: $desktop-breakpoint) {
+    margin: 0;
+    margin-left: $s-size;
+  }
+}

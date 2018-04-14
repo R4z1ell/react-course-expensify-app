@@ -93,43 +93,51 @@ export default class ExpenseForm extends React.Component {
   };
   render() {
     return (
-      <div>
-        {this.state.error && <p>{this.state.error}</p>}
-        <form onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            placeholder="Description"
-            autoFocus
-            value={this.state.description}
-            onChange={this.onDescriptionChange}
-          />
-          <input
-            type="text"
-            placeholder="Amount"
-            value={this.state.amount}
-            onChange={this.onAmountChange}
-          />
-          <SingleDatePicker
-            date={this.state.createdAt}
-            onDateChange={this.onDateChange}
-            focused={this.state.calendarFocused}
-            onFocusChange={this.onFocusChange}
-            numberOfMonths={1}
-            /* With this code below added, EVERY single day in the past is NOW available for being selected 
+      <form className="form" onSubmit={this.onSubmit}>
+        {this.state.error && <p className="form__error">{this.state.error}</p>}
+        <input
+          type="text"
+          placeholder="Description"
+          autoFocus
+          className="text-input"
+          value={this.state.description}
+          onChange={this.onDescriptionChange}
+        />
+        <input
+          type="text"
+          placeholder="Amount"
+          className="text-input"
+          value={this.state.amount}
+          onChange={this.onAmountChange}
+        />
+        <SingleDatePicker
+          date={this.state.createdAt}
+          onDateChange={this.onDateChange}
+          focused={this.state.calendarFocused}
+          onFocusChange={this.onFocusChange}
+          numberOfMonths={1}
+          /* With this code below added, EVERY single day in the past is NOW available for being selected 
             inside the CALENDAR given to us by the 'react-dates' Library, so now we can pick ANY date in the
             PAST(by default, so when we DON'T have this code below this was NOT possible) */
-            isOutsideRange={() => false}
-          />
-          <textarea
-            placeholder="Add a note for your expense (optional)"
-            value={this.state.note}
-            /* We HAVE to add this 'onChange' below OTHERWISE we have a READ ONLY 'taxtarea' and when we type
+          isOutsideRange={() => false}
+        />
+        <textarea
+          placeholder="Add a note for your expense (optional)"
+          className="textarea"
+          value={this.state.note}
+          /* We HAVE to add this 'onChange' below OTHERWISE we have a READ ONLY 'taxtarea' and when we type
             inside of if NOTHING will change */
-            onChange={this.onNoteChange}
-          />
-          <button>Add Expense</button>
-        </form>
-      </div>
+          onChange={this.onNoteChange}
+        />
+        <div>
+          {/* Here below we're putting this 'button' element INSIDE this 'div' so that the 'button is NOT anymore
+          a DIRECT CHILD of the 'form' element, in THIS way our STYLE we defined in the '_form.scss' file we'll
+          NOT target this 'button' element because by putting him INSIDE this 'div' we're REMOVED it from being
+          a DIRECT CHILD of the 'form'. This becase we DON'T want this 'button' to be a FLEX Item and also we
+          want to apply this 'button' class to him */}
+          <button className="button">Save Expense</button>
+        </div>
+      </form>
     );
   }
 }

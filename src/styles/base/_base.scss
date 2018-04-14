@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   /* We know that by DEFAULT 1rem = 16px(16px is the DEFAULT value the the BROWSER give for 1 rem) and this 62.5%
   is coming from 10px/16px = 0.625 => 62.5% . So NOW pretty much we're working with 'rem' in a 10px BASE SYSTEM 
@@ -6,8 +10,10 @@ html {
 }
 
 body {
+  color: $dark-grey;
   font-family: Helvetica, Arial, sans-serif;
   font-size: $m-size;
+  line-height: 1.6;
 }
 
 button {
