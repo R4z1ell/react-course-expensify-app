@@ -28,7 +28,7 @@
     "firebase": "^4.12.1",
     "history": "^4.7.2",
     "live-server": "^1.2.0",
-    "moment": "^2.22.0",
+    "moment": "^2.29.4",
     "node-sass": "^4.8.3",
     "normalize.css": "^8.0.0",
     "numeral": "^2.0.6",
